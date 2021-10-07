@@ -6,10 +6,88 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Barra de Progresso</title>
+    <style>
+        body {
+            font-family: 'Courier New', Courier, monospace;
+            background-color: cornflowerblue;
+        }
+
+        .box {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            background-color: rgba(0, 0, 0, 0.6);
+            border-radius: 5px;
+            padding: 15px;
+        }
+
+        .box-circle svg {
+            width: 150px;
+            height: 150px;
+            position: relative;
+        }
+
+        circle {
+            width: 150px;
+            height: 150px;
+            fill: none;
+            stroke: black;
+            stroke-width: 10px;
+            transform: translate(5px, 5px);
+            stroke-dasharray: 440;
+            stroke-dashoffset: 440;
+        }
+
+        circle:nth-child(1) {
+            stroke-dashoffset: 0;
+            stroke: rgb(102, 102, 102);
+        }
+
+        circle:nth-child(2) {
+            stroke: dodgerblue;
+            transition: stroke-dashoffset 0.8s;
+        }
+
+        .number {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            color: white;
+
+        }
+    </style>
 </head>
 
 <body>
+    <h1>Barra de progresso</h1>
 
+    <input type="number" id="numberProgress" placeholder="Digite um número...">
+    <button onClick="go()">Enviar</button>
+    <div class="box">
+        <div class="box-circle">
+            <svg>
+                <circle cx="70" cy="70" r="70"></circle>
+                <circle id="circleProgress" cx="70" cy="70" r="70"></circle>
+            </svg>
+        </div>
+        <div class="number">
+        </div>
+    </div>
 </body>
+
+<script>
+    function go() {
+        let circle = document.querySelector('#circleProgress');
+        let number = document.querySelector('#numberProgress').value ? document.querySelector('#numberProgress').value : 0;
+        document.querySelector('.number').innerHTML = number + '%'
+        circle.style.strokeDashoffset = 440 - (440 * number) / 100;
+    }
+</script>
 
 </html>
